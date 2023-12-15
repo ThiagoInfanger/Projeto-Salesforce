@@ -1,0 +1,41 @@
+<apex:page controller="ImobiliariaController">
+    <style>
+        #conteudo{
+        margin-top:10%;
+        margin-left:10%;
+        margin-right:10%;
+        }
+        #form1{
+        width: 300px;
+        }
+    </style>
+    
+    <div id="conteudo">
+        <center>
+            <div id="form1">
+                <apex:form>
+                    <apex:pageBlock title="Cadastrar Imoveis">
+                        <apex:pageMessages id="showmessage"></apex:pageMessages>
+                        <apex:panelGrid columns="2">
+                            Quartos: <apex:inputText value="{!quartos}"/>
+                            Banheiros: <apex:inputText value="{!banheiros}"/>
+                            Sala: <apex:inputText value="{!sala}"/>
+                            Cozinha: <apex:inputText value="{!cozinha}"/>
+                            Copa: <apex:inputText value="{!copa}"/>
+                            Suite: <apex:inputText value="{!suite}"/>
+                            Vagas de garagem: <apex:inputText value="{!vagas}"/>
+                            Valor: <apex:inputText value="{!valor}"/>
+                            Tipo do Imovel:
+                            <apex:selectList value="{!tipoImovel}" multiselect="false" size="1" required="true">
+                                <apex:selectOptions value="{!MinhasOpcoes}" />             
+                            </apex:selectList>
+                        </apex:panelGrid>
+                        <br />
+                        <apex:commandButton value="Salvar" action="{!salvarImoveis}"/>
+                        
+                    </apex:pageBlock> 
+                </apex:form>
+            </div>
+        </center>
+    </div>
+</apex:page>
