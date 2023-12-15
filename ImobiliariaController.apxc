@@ -1,0 +1,69 @@
+public class ImobiliariaController {
+    public integer quartos{get; set;}
+    public integer banheiros{get; set;}
+    public integer sala{get; set;}
+    public integer cozinha{get; set;}
+    public integer copa{get; set;}
+    public integer suite{get; set;}
+    public integer vagas{get; set;}
+    public integer valor{get; set;}
+    public String tipoImovel{get; set;}
+    
+    public List<SelectOption> getMinhasOpcoes(){
+        Schema.DescribeFieldResult describeResult = Imoveis__c.TipoImovel__c.getDescribe();
+        
+        List<Schema.PicklistEntry> entries = describeResult.getPickListValues();
+        
+        List<SelectOption> optionsToReturn = new List<SelectOption>();
+        
+        for(Schema.PicklistEntry pEntry : entries){
+            
+            if(pEntry.isActive()){
+                optionsToReturn.add(new SelectOption(pEntry.getValue(), pEntry.getLabel()));
+            }
+        }
+        return optionsToReturn;
+    }
+    
+    
+    
+    public void salvarImoveis(){
+        Imoveis__c objImoveis = new Imoveis__c();
+        objImoveis.Quartos__c = quartos;
+        objImoveis.Sala__c = sala;
+        objImoveis.Cozinha__c = cozinha;
+        objImoveis.Banheiro__c = banheiros;
+        objImoveis.Copa__c = copa;
+        objImoveis.Suite__c = suite;
+        objImoveis.Valor__c = valor;
+        objImoveis.Garagem__c = vagas;
+        objImoveis.TipoImovel__c = tipoImovel;
+        
+        
+        
+        try{ 
+            if(objImoveis.TipoImovel__c != 'Nenhum' && objImoveis.TipoImovel__c != null){
+                ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.CONFIRM, 'Imovel cadastrado com sucesso!'));
+                
+                insert objImoveis;
+                quartos = null;
+                banheiros = null;
+                sala = null;
+                cozinha = null;
+                copa = null;
+               	suite = null;
+                vagas = null;
+                valor = null;
+                tipoImovel = null;
+            }else{
+                ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'O campo tipo imovel deve ser preenchido!'));
+            }
+        }catch(DmlException e){
+            ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Por favor, verefique todos os campos!'));
+        }
+        
+        
+    }
+    
+    
+}
